@@ -9,8 +9,20 @@ import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
 
+import java.util.TimeZone;
+
 @SuppressWarnings("deprecation")
 public class DateParserTest_sql extends TestCase {
+    TimeZone oldtimeZone;
+
+    protected void setUp() throws Exception {
+        oldtimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
+    }
+
+    protected void tearDown() throws Exception {
+        TimeZone.setDefault(oldtimeZone);
+    }
 
     public void f_test_date_0() throws Exception {
         DefaultJSONParser parser = new DefaultJSONParser("1294552193254");

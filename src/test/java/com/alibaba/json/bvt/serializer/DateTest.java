@@ -1,6 +1,7 @@
 package com.alibaba.json.bvt.serializer;
 
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.junit.Assert;
 import junit.framework.TestCase;
@@ -11,6 +12,16 @@ import com.alibaba.fastjson.serializer.SerializeWriter;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class DateTest extends TestCase {
+    TimeZone oldtimeZone;
+
+    protected void setUp() throws Exception {
+        oldtimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
+    }
+
+    protected void tearDown() throws Exception {
+        TimeZone.setDefault(oldtimeZone);
+    }
 
     public void test_0() throws Exception {
         SerializeWriter out = new SerializeWriter();

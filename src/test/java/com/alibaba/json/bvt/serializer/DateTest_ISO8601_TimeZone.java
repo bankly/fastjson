@@ -15,6 +15,16 @@ import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
 public class DateTest_ISO8601_TimeZone extends TestCase {
+    TimeZone oldtimeZone;
+
+    protected void setUp() throws Exception {
+        oldtimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
+    }
+
+    protected void tearDown() throws Exception {
+        TimeZone.setDefault(oldtimeZone);
+    }
 
     public void test_date1() throws Exception {
         Map<String,Date> map = new HashMap<String,Date>();
@@ -51,7 +61,7 @@ public class DateTest_ISO8601_TimeZone extends TestCase {
 
         Calendar cal = JSON.parseObject(json, VO.class).getGmtCreate();
 
-        Assert.assertEquals(8, cal.getTimeZone().getRawOffset() / (3600 * 1000));
+        Assert.assertEquals(TimeZone.getDefault().getRawOffset(), cal.getTimeZone().getRawOffset());
     }
 
     public static class VO {

@@ -2,6 +2,7 @@ package com.alibaba.json.bvt.parser;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import junit.framework.TestCase;
 
@@ -13,6 +14,17 @@ import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
 
 public class DefaultJSONParserTest_date extends TestCase {
+    TimeZone oldtimeZone;
+
+    protected void setUp() throws Exception {
+        oldtimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
+    }
+
+    protected void tearDown() throws Exception {
+        TimeZone.setDefault(oldtimeZone);
+    }
+
     public void test_date() {
         String text = "{\"date\":\"2011-01-09T13:49:53.254\"}";
         char[] chars = text.toCharArray();

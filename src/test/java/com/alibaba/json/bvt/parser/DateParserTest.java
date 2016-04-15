@@ -1,6 +1,8 @@
 package com.alibaba.json.bvt.parser;
 
+import java.time.ZoneId;
 import java.util.Date;
+import java.util.TimeZone;
 
 import junit.framework.TestCase;
 
@@ -14,6 +16,16 @@ import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
 
 public class DateParserTest extends TestCase {
+    TimeZone oldtimeZone;
+
+    protected void setUp() throws Exception {
+        oldtimeZone = TimeZone.getDefault();
+        TimeZone.setDefault(TimeZone.getTimeZone("GMT+8:00"));
+    }
+
+    protected void tearDown() throws Exception {
+        TimeZone.setDefault(oldtimeZone);
+    }
 
     public void test_date_new() throws Exception {
         DefaultJSONParser parser = new DefaultJSONParser("new Date(1294552193254)");
